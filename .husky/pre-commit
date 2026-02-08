@@ -1,0 +1,12 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+pnpm -C admin-web lint
+pnpm -C admin-web format:check
+pnpm -C admin-web typecheck
+pnpm test:web
+
+pnpm -C functions lint
+pnpm -C functions format:check
+pnpm -C functions typecheck
+pnpm test:functions

@@ -1,0 +1,10 @@
+#root {
+  min-height: 100vh;
+  margin: 0;
+  padding: 2rem;
+}
+
+.app {
+  display: grid;
+  gap: 0.5rem;
+}
