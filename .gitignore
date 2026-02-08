@@ -7,3 +7,4 @@ coverage/
 *.log
 *.tsbuildinfo
 pnpm-debug.log*
+ios/GoogleService-Info.plist
