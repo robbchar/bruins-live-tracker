@@ -72,7 +72,8 @@ export default defineConfig([
 ])
 ```
 ## Firebase config (local only)
-Create `admin-web/.env.local` (ignored by git) and set:
+Copy `admin-web/.env.local.example` to `admin-web/.env.local`
+and set:
 ```
 VITE_FIREBASE_API_KEY=your_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain

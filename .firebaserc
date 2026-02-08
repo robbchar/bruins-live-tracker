@@ -1,5 +1,16 @@
+
 {
   "projects": {
     "default": "robbchar-3db11"
-  }
+  },
+  "targets": {
+    "robbchar-3db11": {
+      "hosting": {
+        "buins-live-tracker": [
+          "buins-live-tracker"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

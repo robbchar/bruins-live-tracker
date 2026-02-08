@@ -15,5 +15,13 @@ committing app secrets or accidentally overwriting shared Firestore rules.
    - `admin-web/.env.local`
    - `ios/GoogleService-Info.plist`
 3. Provide example templates and README guidance.
-4. Only deploy Firestore rules after merging the Bruins Live additive section
+4. Configure Firebase Hosting for the admin web build in `firebase.json`.
+5. Only deploy Firestore rules after merging the Bruins Live additive section
    into the shared rules file used by the rest of the Firebase project.
+
+## Hosting
+Build and deploy the admin UI with:
+```
+pnpm -C admin-web build
+firebase deploy --only hosting:buins-live-tracker
+```
