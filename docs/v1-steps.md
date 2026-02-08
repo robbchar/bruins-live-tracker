@@ -72,8 +72,8 @@ ios/
   - [ ] Existing apps remain unaffected
 
 **Tests (functions / Vitest)**
-- [ ] Unit test `getTodayKey(timezone)`
-- [ ] Unit test `computeEffectiveChannel(default, override)`
+- [x] Unit test `getTodayKey(timezone)`
+- [x] Unit test `computeEffectiveChannel(default, override)`
 
 **Acceptance**
 - [ ] Firestore rules deployed
