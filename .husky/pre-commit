@@ -1,0 +1,36 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+admin_changed_src=$(git diff --cached --name-only -- 'admin-web/src')
+admin_changed_config=$(git diff --cached --name-only -- \
+  'admin-web/vite.config.ts' \
+  'admin-web/tsconfig*.json' \
+  'admin-web/package.json')
+if [ -n "$admin_changed_src$admin_changed_config" ]; then
+  pnpm -C admin-web lint
+  pnpm -C admin-web format:check
+  pnpm -C admin-web typecheck
+  if [ -n "$admin_changed_config" ]; then
+    pnpm -C admin-web test
+  else
+    admin_related=$(printf '%s\n' "$admin_changed_src" | sed 's|^admin-web/||')
+    pnpm -C admin-web vitest related --run -- $admin_related
+  fi
+fi
+
+functions_changed_src=$(git diff --cached --name-only -- 'functions/src')
+functions_changed_config=$(git diff --cached --name-only -- \
+  'functions/vitest.config.ts' \
+  'functions/tsconfig.json' \
+  'functions/package.json')
+if [ -n "$functions_changed_src$functions_changed_config" ]; then
+  pnpm -C functions lint
+  pnpm -C functions format:check
+  pnpm -C functions typecheck
+  if [ -n "$functions_changed_config" ]; then
+    pnpm -C functions test
+  else
+    functions_related=$(printf '%s\n' "$functions_changed_src" | sed 's|^functions/||')
+    pnpm -C functions vitest related --run -- $functions_related
+  fi
+fi
