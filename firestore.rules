@@ -1,0 +1,24 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // TODO: Merge this Bruins Live section into the shared rules file.
+    // Do not modify or remove rules for other apps.
+    match /bruinsLive {
+      // Public config and today pointer can be read by clients.
+      match /config/public {
+        allow read: if true;
+        allow write: if false;
+      }
+
+      match /today/{dateKey} {
+        allow read: if true;
+        allow write: if false;
+      }
+
+      // Default deny for all other Bruins Live docs.
+      match /{document=**} {
+        allow read, write: if false;
+      }
+    }
+  }
+}
