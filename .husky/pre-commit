@@ -13,7 +13,12 @@ if [ -n "$admin_changed_src$admin_changed_config" ]; then
     pnpm -C admin-web test
   else
     admin_related=$(printf '%s\n' "$admin_changed_src" | sed 's|^admin-web/||')
-    pnpm -C admin-web vitest related --run -- $admin_related
+    admin_tests=$(printf '%s\n' "$admin_related" | grep -E '\\.(test|spec)\\.[jt]sx?$' || true)
+    if [ -n "$admin_tests" ]; then
+      pnpm -C admin-web exec vitest run -- $admin_tests
+    else
+      pnpm -C admin-web exec vitest related --run -- $admin_related
+    fi
   fi
 fi
 
@@ -30,6 +35,11 @@ if [ -n "$functions_changed_src$functions_changed_config" ]; then
     pnpm -C functions test
   else
     functions_related=$(printf '%s\n' "$functions_changed_src" | sed 's|^functions/||')
-    pnpm -C functions vitest related --run -- $functions_related
+    functions_tests=$(printf '%s\n' "$functions_related" | grep -E '\\.(test|spec)\\.[jt]sx?$' || true)
+    if [ -n "$functions_tests" ]; then
+      pnpm -C functions exec vitest run -- $functions_tests
+    else
+      pnpm -C functions exec vitest related --run -- $functions_related
+    fi
   fi
 fi

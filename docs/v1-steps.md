@@ -118,24 +118,24 @@ ios/
 - Admin can view and override today’s SiriusXM channel
 
 **To do**
-- [ ] Create admin UI using React + Vite
-- [ ] Display default channel from `/bruinsLive/app/config/public`
-- [ ] Display effective channel from `/bruinsLive/app/today/{dateKey}`
-- [ ] Allow setting `channelOverride` and note
-- [ ] Allow clearing override
-- [ ] Wrap Firebase access behind `dataClient`
+- [x] Create admin UI using React + Vite
+- [x] Display default channel from `/bruinsLive/app/config/public`
+- [x] Display effective channel from `/bruinsLive/app/today/{dateKey}`
+- [x] Allow setting `channelOverride` and note
+- [x] Allow clearing override
+- [x] Wrap Firebase access behind `dataClient`
 
 **Tests (Vitest + Testing Library)**
-- [ ] Render default + effective channel
-- [ ] Save override calls correct client method
-- [ ] Clear override resets state
-- [ ] Firebase client mocked (no real calls)
+- [x] Render default + effective channel
+- [x] Save override calls correct client method
+- [x] Clear override resets state
+- [x] Firebase client mocked (no real calls)
 
 **Acceptance**
-- [ ] Admin UI tests pass
-- [ ] Admin UI deploys to Firebase Hosting
-- [ ] Override updates Firestore correctly
-- [ ] All items checked off the list of TODOs
+- [x] Admin UI tests pass
+- [x] Admin UI deploys to Firebase Hosting
+- [x] Override updates Firestore correctly
+- [x] All items checked off the list of TODOs
 
 **Prompt**
 > Use `docs/architecture.md`. Build the admin UI for viewing and setting `/bruinsLive/app/today/{dateKey}.channelOverride`. Use React + Vite + Vitest. Mock Firebase via a dataClient abstraction.

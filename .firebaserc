@@ -6,8 +6,8 @@
   "targets": {
     "robbchar-3db11": {
       "hosting": {
-        "buins-live-tracker": [
-          "buins-live-tracker"
+        "bruins-live-tracker-adminweb": [
+          "bruins-live-tracker-adminweb"
         ]
       }
     }
