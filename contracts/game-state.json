@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bruins-live-tracker/contracts/game-state.json",
+  "title": "Bruins Live Game State",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "gameId",
+    "startTime",
+    "status",
+    "opponentName",
+    "isHome",
+    "sourceUpdatedAt"
+  ],
+  "properties": {
+    "gameId": {
+      "type": "string",
+      "description": "NHL game identifier."
+    },
+    "startTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled start time in ISO 8601 format."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["scheduled", "live", "final"]
+    },
+    "opponentName": {
+      "type": "string"
+    },
+    "isHome": {
+      "type": "boolean"
+    },
+    "scoreHome": {
+      "type": ["number", "null"]
+    },
+    "scoreAway": {
+      "type": ["number", "null"]
+    },
+    "period": {
+      "type": ["integer", "null"],
+      "minimum": 1
+    },
+    "clock": {
+      "type": ["string", "null"],
+      "description": "Game clock string (e.g. 12:34)."
+    },
+    "sourceUpdatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last time the source data was updated."
+    }
+  }
+}
