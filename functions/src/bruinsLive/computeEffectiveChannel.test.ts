@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { computeEffectiveChannel } from './computeEffectiveChannel'
+import { computeEffectiveChannel } from './computeEffectiveChannel.js'
 
 describe('computeEffectiveChannel', () => {
   it('returns the override when provided', () => {

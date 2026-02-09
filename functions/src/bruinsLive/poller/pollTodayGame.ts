@@ -1,13 +1,13 @@
-import { computeEffectiveChannel } from '../computeEffectiveChannel'
-import { getTodayKey } from '../getTodayKey'
+import { computeEffectiveChannel } from '../computeEffectiveChannel.js'
+import { getTodayKey } from '../getTodayKey.js'
 import {
   getNhlSeasonId,
   selectRelevantGame,
   toGameState,
-} from '../adapters/nhlApiAdapter'
-import type { SportsDataProvider } from '../providers/SportsDataProvider'
-import type { GameState, GameStatus, TodayState } from '../types'
-import type { BruinsLiveStore } from './firestoreClient'
+} from '../adapters/nhlApiAdapter.js'
+import type { SportsDataProvider } from '../providers/SportsDataProvider.js'
+import type { GameState, GameStatus, TodayState } from '../types.js'
+import type { BruinsLiveStore } from './firestoreClient.js'
 
 export type PollTodayGameResult = {
   dateKey: string

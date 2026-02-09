@@ -5,10 +5,10 @@ import type {
   NhlLandingResponse,
   NhlScheduleResponse,
   SportsDataProvider,
-} from '../providers/SportsDataProvider'
-import type { GameState, PublicConfig, TodayState } from '../types'
-import type { BruinsLiveStore } from './firestoreClient'
-import { pollTodayGame } from './pollTodayGame'
+} from '../providers/SportsDataProvider.js'
+import type { GameState, PublicConfig, TodayState } from '../types.js'
+import type { BruinsLiveStore } from './firestoreClient.js'
+import { pollTodayGame } from './pollTodayGame.js'
 
 const fixturesRoot = resolve(process.cwd(), 'src', 'bruinsLive', 'fixtures')
 

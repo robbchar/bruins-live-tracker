@@ -1,5 +1,5 @@
 import type { Firestore } from 'firebase-admin/firestore'
-import type { GameState, PublicConfig, TodayState } from '../types'
+import type { GameState, PublicConfig, TodayState } from '../types.js'
 
 export type BruinsLiveStore = {
   getConfig: () => Promise<PublicConfig>

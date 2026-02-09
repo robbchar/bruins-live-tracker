@@ -3,7 +3,7 @@ import addFormats from 'ajv-formats'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { gameStateSchema, todayStateSchema } from './contracts'
+import { gameStateSchema, todayStateSchema } from './contracts.js'
 
 const loadJson = (path: string) =>
   JSON.parse(readFileSync(path, 'utf-8')) as unknown

@@ -4,8 +4,8 @@ import { describe, expect, it } from 'vitest'
 import type {
   NhlLandingResponse,
   NhlScheduleResponse,
-} from '../providers/SportsDataProvider'
-import { selectRelevantGame, toGameState } from './nhlApiAdapter'
+} from '../providers/SportsDataProvider.js'
+import { selectRelevantGame, toGameState } from './nhlApiAdapter.js'
 
 const fixturesRoot = resolve(process.cwd(), 'src', 'bruinsLive', 'fixtures')
 

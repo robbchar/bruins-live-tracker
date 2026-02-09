@@ -3,7 +3,7 @@ import type {
   NhlLandingResponse,
   NhlScheduleResponse,
   SportsDataProvider,
-} from './SportsDataProvider'
+} from './SportsDataProvider.js'
 
 const baseUrl = 'https://api-web.nhle.com/v1'
 

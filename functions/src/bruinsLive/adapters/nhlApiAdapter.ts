@@ -3,8 +3,8 @@ import type {
   NhlScheduleGame,
   NhlScheduleResponse,
   NhlScheduleTeam,
-} from '../providers/SportsDataProvider'
-import type { GameState, GameStatus } from '../types'
+} from '../providers/SportsDataProvider.js'
+import type { GameState, GameStatus } from '../types.js'
 
 const bruinsAbbrev = 'BOS'
 
