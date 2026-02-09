@@ -22,5 +22,4 @@ admin set or clear the SiriusXM channel override for the current day.
    - Clear calls clear override and resets inputs
 
 ## Non-goals
-- Real Firebase integration (added in later steps).
 - Authentication or access control.

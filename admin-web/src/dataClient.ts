@@ -1,40 +1,111 @@
+import type { FirebaseOptions } from 'firebase/app'
+import { initializeApp } from 'firebase/app'
+import {
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
+  type Firestore,
+} from 'firebase/firestore/lite'
 import type { PublicConfig, TodayState } from './types'
 
 export type SetChannelOverrideInput = {
   dateKey: string
   channelOverride: string
   channelOverrideNote: string | null
+  effectiveChannel: string
+}
+
+export type ClearChannelOverrideInput = {
+  dateKey: string
+  effectiveChannel: string
 }
 
 export type DataClient = {
   getPublicConfig: () => Promise<PublicConfig>
-  getTodayState: () => Promise<TodayState>
+  getTodayState: (dateKey: string) => Promise<TodayState>
   setChannelOverride: (input: SetChannelOverrideInput) => Promise<void>
-  clearChannelOverride: (dateKey: string) => Promise<void>
+  clearChannelOverride: (input: ClearChannelOverrideInput) => Promise<void>
 }
 
-const fallbackConfig: PublicConfig = {
-  teamId: 'bruins',
-  defaultChannel: '91',
-  channelLabel: 'SiriusXM',
-  timezone: 'America/New_York',
+const getRequiredEnv = (key: string) => {
+  const value = import.meta.env[key] as string | undefined
+  if (!value) {
+    throw new Error(`Missing environment variable: ${key}`)
+  }
+  return value
 }
 
-const fallbackToday: TodayState = {
-  dateKey: '2026-02-08',
-  gameId: null,
-  effectiveChannel: '91',
-  channelOverride: null,
-  channelOverrideNote: null,
+const getFirebaseConfig = (): FirebaseOptions => ({
+  apiKey: getRequiredEnv('VITE_FIREBASE_API_KEY'),
+  authDomain: getRequiredEnv('VITE_FIREBASE_AUTH_DOMAIN'),
+  projectId: getRequiredEnv('VITE_FIREBASE_PROJECT_ID'),
+  storageBucket: getRequiredEnv('VITE_FIREBASE_STORAGE_BUCKET'),
+  messagingSenderId: getRequiredEnv('VITE_FIREBASE_MESSAGING_SENDER_ID'),
+  appId: getRequiredEnv('VITE_FIREBASE_APP_ID'),
+  measurementId: getRequiredEnv('VITE_FIREBASE_MEASUREMENT_ID'),
+})
+
+let firestore: Firestore | null = null
+
+const getDb = () => {
+  if (!firestore) {
+    const app = initializeApp(getFirebaseConfig())
+    firestore = getFirestore(app)
+  }
+  return firestore
 }
 
 export const dataClient: DataClient = {
   async getPublicConfig() {
-    return fallbackConfig
+    const db = getDb()
+    const snapshot = await getDoc(
+      doc(db, 'bruinsLive', 'app', 'config', 'public'),
+    )
+    if (!snapshot.exists()) {
+      throw new Error('Missing /bruinsLive/app/config/public')
+    }
+    return snapshot.data() as PublicConfig
   },
-  async getTodayState() {
-    return fallbackToday
+  async getTodayState(dateKey) {
+    const db = getDb()
+    const snapshot = await getDoc(
+      doc(db, 'bruinsLive', 'app', 'today', dateKey),
+    )
+    if (!snapshot.exists()) {
+      throw new Error(`Missing /bruinsLive/app/today/${dateKey}`)
+    }
+    return snapshot.data() as TodayState
   },
-  async setChannelOverride() {},
-  async clearChannelOverride() {},
+  async setChannelOverride({
+    dateKey,
+    channelOverride,
+    channelOverrideNote,
+    effectiveChannel,
+  }) {
+    const db = getDb()
+    await setDoc(
+      doc(db, 'bruinsLive', 'app', 'today', dateKey),
+      {
+        channelOverride,
+        channelOverrideNote,
+        effectiveChannel,
+        updatedAt: new Date().toISOString(),
+      },
+      { merge: true },
+    )
+  },
+  async clearChannelOverride({ dateKey, effectiveChannel }) {
+    const db = getDb()
+    await setDoc(
+      doc(db, 'bruinsLive', 'app', 'today', dateKey),
+      {
+        channelOverride: null,
+        channelOverrideNote: null,
+        effectiveChannel,
+        updatedAt: new Date().toISOString(),
+      },
+      { merge: true },
+    )
+  },
 }

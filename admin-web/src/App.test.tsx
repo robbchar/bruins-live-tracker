@@ -2,17 +2,22 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 import App from './App'
-import type { DataClient, SetChannelOverrideInput } from './dataClient'
+import type {
+  ClearChannelOverrideInput,
+  DataClient,
+  SetChannelOverrideInput,
+} from './dataClient'
 import type { PublicConfig, TodayState } from './types'
 
 describe('App', () => {
   it('renders default and effective channels', async () => {
     const mockClient = {
       getPublicConfig: vi.fn<() => Promise<PublicConfig>>(),
-      getTodayState: vi.fn<() => Promise<TodayState>>(),
+      getTodayState: vi.fn<(dateKey: string) => Promise<TodayState>>(),
       setChannelOverride:
         vi.fn<(input: SetChannelOverrideInput) => Promise<void>>(),
-      clearChannelOverride: vi.fn<(dateKey: string) => Promise<void>>(),
+      clearChannelOverride:
+        vi.fn<(input: ClearChannelOverrideInput) => Promise<void>>(),
     } satisfies DataClient
     mockClient.getPublicConfig.mockResolvedValue({
       teamId: 'bruins',
@@ -39,10 +44,11 @@ describe('App', () => {
     const user = userEvent.setup()
     const mockClient = {
       getPublicConfig: vi.fn<() => Promise<PublicConfig>>(),
-      getTodayState: vi.fn<() => Promise<TodayState>>(),
+      getTodayState: vi.fn<(dateKey: string) => Promise<TodayState>>(),
       setChannelOverride:
         vi.fn<(input: SetChannelOverrideInput) => Promise<void>>(),
-      clearChannelOverride: vi.fn<(dateKey: string) => Promise<void>>(),
+      clearChannelOverride:
+        vi.fn<(input: ClearChannelOverrideInput) => Promise<void>>(),
     } satisfies DataClient
     mockClient.getPublicConfig.mockResolvedValue({
       teamId: 'bruins',
@@ -71,6 +77,7 @@ describe('App', () => {
         dateKey: '2026-02-08',
         channelOverride: '92',
         channelOverrideNote: 'National feed',
+        effectiveChannel: '92',
       })
     })
   })
@@ -79,10 +86,11 @@ describe('App', () => {
     const user = userEvent.setup()
     const mockClient = {
       getPublicConfig: vi.fn<() => Promise<PublicConfig>>(),
-      getTodayState: vi.fn<() => Promise<TodayState>>(),
+      getTodayState: vi.fn<(dateKey: string) => Promise<TodayState>>(),
       setChannelOverride:
         vi.fn<(input: SetChannelOverrideInput) => Promise<void>>(),
-      clearChannelOverride: vi.fn<(dateKey: string) => Promise<void>>(),
+      clearChannelOverride:
+        vi.fn<(input: ClearChannelOverrideInput) => Promise<void>>(),
     } satisfies DataClient
     mockClient.getPublicConfig.mockResolvedValue({
       teamId: 'bruins',
@@ -104,7 +112,10 @@ describe('App', () => {
     await user.click(screen.getByRole('button', { name: /clear override/i }))
 
     await waitFor(() => {
-      expect(mockClient.clearChannelOverride).toHaveBeenCalledWith('2026-02-08')
+      expect(mockClient.clearChannelOverride).toHaveBeenCalledWith({
+        dateKey: '2026-02-08',
+        effectiveChannel: '91',
+      })
     })
 
     expect(screen.getByLabelText(/Channel override/i)).toHaveValue('')
