@@ -3,7 +3,9 @@ dist/
 coverage/
 .env
 .env.*
+!.env.local.example
 .DS_Store
 *.log
 *.tsbuildinfo
 pnpm-debug.log*
+ios/GoogleService-Info.plist

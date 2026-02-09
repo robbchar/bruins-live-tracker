@@ -1,0 +1,19 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "hosting": [
+    {
+      "target": "buins-live-tracker",
+      "public": "admin-web/dist",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "predeploy": ["pnpm -C admin-web build"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}
