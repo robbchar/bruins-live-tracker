@@ -1,4 +1,7 @@
-export const getTodayKey = (timezone: string, date: Date = new Date()): string => {
+export const getTodayKey = (
+  timezone: string,
+  date: Date = new Date(),
+): string => {
   const formatter = new Intl.DateTimeFormat('en-CA', {
     timeZone: timezone,
     year: 'numeric',
