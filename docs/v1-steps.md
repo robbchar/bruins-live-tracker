@@ -62,24 +62,24 @@ ios/
 - Firestore rules safely allow Bruins Live without impacting other apps
 
 **To do**
-- [ ] Create Firebase project
-- [ ] Initialize Firestore
-- [ ] Create `/bruinsLive/app/config/public`
-- [ ] Create `/bruinsLive/app/today/{dateKey}`
-- [ ] Add Firestore rules:
-  - [ ] Rules are **additive**
-  - [ ] Rules are scoped to `/bruinsLive/app/**`
-  - [ ] Existing apps remain unaffected
+- [x] Create Firebase project
+- [x] Initialize Firestore
+- [x] Create `/bruinsLive/app/config/public`
+- [x] Create `/bruinsLive/app/today/{dateKey}`
+- [x] Add Firestore rules:
+  - [x] Rules are **additive**
+  - [x] Rules are scoped to `/bruinsLive/app/**`
+  - [x] Existing apps remain unaffected
 
 **Tests (functions / Vitest)**
 - [x] Unit test `getTodayKey(timezone)`
 - [x] Unit test `computeEffectiveChannel(default, override)`
 
 **Acceptance**
-- [ ] Firestore rules deployed
-- [ ] No existing rules removed or modified
-- [ ] All Vitest tests pass
-- [ ] All items checked off the list of TODOs
+- [x] Firestore rules deployed
+- [x] No existing rules removed or modified
+- [x] All Vitest tests pass
+- [x] All items checked off the list of TODOs
 
 **Prompt**
 > Use `docs/architecture.md`. Implement Firestore helpers for dateKey and effectiveChannel in `functions`, with Vitest tests. Draft additive Firestore rules scoped only to `/bruinsLive/app/**`.
