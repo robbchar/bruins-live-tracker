@@ -39,7 +39,7 @@ function App({ client = defaultClient }: AppProps) {
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [client])
 
   const handleSave = async () => {
     if (!loadState.today) return
