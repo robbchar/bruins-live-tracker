@@ -23,5 +23,5 @@ committing app secrets or accidentally overwriting shared Firestore rules.
 Build and deploy the admin UI with:
 ```
 pnpm -C admin-web build
-firebase deploy --only hosting:buins-live-tracker
+firebase deploy --only hosting:bruins-live-tracker-adminweb
 ```

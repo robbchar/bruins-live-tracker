@@ -133,7 +133,7 @@ ios/
 
 **Acceptance**
 - [x] Admin UI tests pass
-- [ ] Admin UI deploys to Firebase Hosting
+- [x] Admin UI deploys to Firebase Hosting
 - [ ] Override updates Firestore correctly
 - [x] All items checked off the list of TODOs
 
