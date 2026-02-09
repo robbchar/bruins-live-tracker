@@ -1,5 +1,15 @@
-import type { FirebaseOptions } from 'firebase/app'
+import type { FirebaseApp, FirebaseOptions } from 'firebase/app'
 import { initializeApp } from 'firebase/app'
+import {
+  browserLocalPersistence,
+  getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  setPersistence,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth'
 import {
   doc,
   getDoc,
@@ -22,6 +32,10 @@ export type ClearChannelOverrideInput = {
 }
 
 export type DataClient = {
+  onAuthStateChanged: (listener: (user: AuthUser | null) => void) => () => void
+  signInWithEmailPassword: (email: string, password: string) => Promise<void>
+  signInWithGoogle: () => Promise<void>
+  signOut: () => Promise<void>
   getPublicConfig: () => Promise<PublicConfig>
   getTodayState: (dateKey: string) => Promise<TodayState>
   setChannelOverride: (input: SetChannelOverrideInput) => Promise<void>
@@ -46,17 +60,58 @@ const getFirebaseConfig = (): FirebaseOptions => ({
   measurementId: getRequiredEnv('VITE_FIREBASE_MEASUREMENT_ID'),
 })
 
+export type AuthUser = {
+  email: string | null
+}
+
+let app: FirebaseApp | null = null
 let firestore: Firestore | null = null
+let authReady = false
+
+const getApp = () => {
+  if (!app) {
+    app = initializeApp(getFirebaseConfig())
+  }
+  return app
+}
+
+const ensureAuthPersistence = async () => {
+  if (authReady) return
+  const auth = getAuth(getApp())
+  await setPersistence(auth, browserLocalPersistence)
+  authReady = true
+}
 
 const getDb = () => {
   if (!firestore) {
-    const app = initializeApp(getFirebaseConfig())
-    firestore = getFirestore(app)
+    firestore = getFirestore(getApp())
   }
   return firestore
 }
 
 export const dataClient: DataClient = {
+  onAuthStateChanged(listener) {
+    void ensureAuthPersistence()
+    const auth = getAuth(getApp())
+    return onAuthStateChanged(auth, (user) => {
+      listener(user ? { email: user.email } : null)
+    })
+  },
+  async signInWithEmailPassword(email, password) {
+    await ensureAuthPersistence()
+    const auth = getAuth(getApp())
+    await signInWithEmailAndPassword(auth, email, password)
+  },
+  async signInWithGoogle() {
+    await ensureAuthPersistence()
+    const auth = getAuth(getApp())
+    const provider = new GoogleAuthProvider()
+    await signInWithPopup(auth, provider)
+  },
+  async signOut() {
+    const auth = getAuth(getApp())
+    await signOut(auth)
+  },
   async getPublicConfig() {
     const db = getDb()
     const snapshot = await getDoc(

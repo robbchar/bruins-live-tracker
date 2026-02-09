@@ -3,22 +3,39 @@ import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 import App from './App'
 import type {
+  AuthUser,
   ClearChannelOverrideInput,
   DataClient,
   SetChannelOverrideInput,
 } from './dataClient'
 import type { PublicConfig, TodayState } from './types'
 
+const buildMockClient = (authUser: AuthUser | null) => {
+  const client = {
+    onAuthStateChanged: vi.fn<
+      (listener: (user: AuthUser | null) => void) => () => void
+    >((listener) => {
+      listener(authUser)
+      return () => {}
+    }),
+    signInWithEmailPassword:
+      vi.fn<(email: string, password: string) => Promise<void>>(),
+    signInWithGoogle: vi.fn<() => Promise<void>>(),
+    signOut: vi.fn<() => Promise<void>>(),
+    getPublicConfig: vi.fn<() => Promise<PublicConfig>>(),
+    getTodayState: vi.fn<(dateKey: string) => Promise<TodayState>>(),
+    setChannelOverride:
+      vi.fn<(input: SetChannelOverrideInput) => Promise<void>>(),
+    clearChannelOverride:
+      vi.fn<(input: ClearChannelOverrideInput) => Promise<void>>(),
+  } satisfies DataClient
+
+  return client
+}
+
 describe('App', () => {
   it('renders default and effective channels', async () => {
-    const mockClient = {
-      getPublicConfig: vi.fn<() => Promise<PublicConfig>>(),
-      getTodayState: vi.fn<(dateKey: string) => Promise<TodayState>>(),
-      setChannelOverride:
-        vi.fn<(input: SetChannelOverrideInput) => Promise<void>>(),
-      clearChannelOverride:
-        vi.fn<(input: ClearChannelOverrideInput) => Promise<void>>(),
-    } satisfies DataClient
+    const mockClient = buildMockClient({ email: 'robbchar@gmail.com' })
     mockClient.getPublicConfig.mockResolvedValue({
       teamId: 'bruins',
       defaultChannel: '91',
@@ -42,14 +59,7 @@ describe('App', () => {
 
   it('saves channel override and note', async () => {
     const user = userEvent.setup()
-    const mockClient = {
-      getPublicConfig: vi.fn<() => Promise<PublicConfig>>(),
-      getTodayState: vi.fn<(dateKey: string) => Promise<TodayState>>(),
-      setChannelOverride:
-        vi.fn<(input: SetChannelOverrideInput) => Promise<void>>(),
-      clearChannelOverride:
-        vi.fn<(input: ClearChannelOverrideInput) => Promise<void>>(),
-    } satisfies DataClient
+    const mockClient = buildMockClient({ email: 'robbchar@gmail.com' })
     mockClient.getPublicConfig.mockResolvedValue({
       teamId: 'bruins',
       defaultChannel: '91',
@@ -84,14 +94,7 @@ describe('App', () => {
 
   it('clears channel override', async () => {
     const user = userEvent.setup()
-    const mockClient = {
-      getPublicConfig: vi.fn<() => Promise<PublicConfig>>(),
-      getTodayState: vi.fn<(dateKey: string) => Promise<TodayState>>(),
-      setChannelOverride:
-        vi.fn<(input: SetChannelOverrideInput) => Promise<void>>(),
-      clearChannelOverride:
-        vi.fn<(input: ClearChannelOverrideInput) => Promise<void>>(),
-    } satisfies DataClient
+    const mockClient = buildMockClient({ email: 'robbchar@gmail.com' })
     mockClient.getPublicConfig.mockResolvedValue({
       teamId: 'bruins',
       defaultChannel: '91',
@@ -120,5 +123,25 @@ describe('App', () => {
 
     expect(screen.getByLabelText(/Channel override/i)).toHaveValue('')
     expect(screen.getByLabelText(/Override note/i)).toHaveValue('')
+  })
+
+  it('shows login when signed out', async () => {
+    const user = userEvent.setup()
+    const mockClient = buildMockClient(null)
+
+    render(<App client={mockClient} />)
+
+    expect(await screen.findByText(/Sign in to manage/i)).toBeInTheDocument()
+
+    await user.type(screen.getByLabelText(/Email/i), 'robbchar@gmail.com')
+    await user.type(screen.getByLabelText(/Password/i), 'secret')
+    await user.click(screen.getByRole('button', { name: /sign in$/i }))
+
+    await waitFor(() => {
+      expect(mockClient.signInWithEmailPassword).toHaveBeenCalledWith(
+        'robbchar@gmail.com',
+        'secret',
+      )
+    })
   })
 })
