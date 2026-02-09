@@ -27,6 +27,7 @@
     "vitest": "^4.0.18"
   },
   "dependencies": {
+    "@google-cloud/functions-framework": "^5.0.0",
     "firebase-admin": "^13.6.1",
     "firebase-functions": "^7.0.5",
     "undici": "^7.21.0"
