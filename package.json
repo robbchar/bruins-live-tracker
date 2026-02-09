@@ -8,7 +8,7 @@
     "watch:web": "pnpm -C admin-web test --watch",
     "test:functions": "pnpm -C functions test",
     "watch:functions": "pnpm -C functions test --watch",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "devDependencies": {
     "husky": "^9.1.7"

@@ -1,5 +1,4 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
 
 admin_changed_src=$(git diff --cached --name-only -- 'admin-web/src')
 admin_changed_config=$(git diff --cached --name-only -- \

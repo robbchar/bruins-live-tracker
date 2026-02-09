@@ -92,20 +92,20 @@ ios/
 - A single source of truth exists for “today state” and “game state”
 
 **To do**
-- [ ] Create `contracts/game-state.json`
-- [ ] Create `contracts/today-state.json`
-- [ ] Document required and optional fields
-- [ ] Ensure contracts match Firestore schema
+- [x] Create `contracts/game-state.json`
+- [x] Create `contracts/today-state.json`
+- [x] Document required and optional fields
+- [x] Ensure contracts match Firestore schema
 
 **Tests (functions / Vitest)**
-- [ ] Validate fixture data against contracts
-- [ ] Reject invalid contract shapes
+- [x] Validate fixture data against contracts
+- [x] Reject invalid contract shapes
 
 **Acceptance**
-- [ ] Contracts committed
-- [ ] Backend code depends on contracts
-- [ ] All tests pass
-- [ ] All items checked off the list of TODOs
+- [x] Contracts committed
+- [x] Backend code depends on contracts
+- [x] All tests pass
+- [x] All items checked off the list of TODOs
 
 **Prompt**
 > Use `docs/architecture.md`. Define shared JSON contracts for game state and today state. Add validation tests in `functions` using fixture data.

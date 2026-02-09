@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bruins-live-tracker/contracts/today-state.json",
+  "title": "Bruins Live Today State",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "dateKey",
+    "gameId",
+    "effectiveChannel",
+    "channelOverride",
+    "channelOverrideNote",
+    "updatedAt"
+  ],
+  "properties": {
+    "dateKey": {
+      "type": "string",
+      "format": "date",
+      "description": "Eastern date key in YYYY-MM-DD."
+    },
+    "gameId": {
+      "type": ["string", "null"]
+    },
+    "effectiveChannel": {
+      "type": "string"
+    },
+    "channelOverride": {
+      "type": ["string", "null"]
+    },
+    "channelOverrideNote": {
+      "type": ["string", "null"]
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
