@@ -1,0 +1,21 @@
+{
+  "currentSeason": 20252026,
+  "games": [
+    {
+      "id": 2026020801,
+      "gameDate": "2026-02-08",
+      "startTimeUTC": "2026-02-08T00:30:00Z",
+      "gameState": "OFF",
+      "homeTeam": {
+        "abbrev": "BOS",
+        "commonName": { "default": "Bruins" },
+        "score": 0
+      },
+      "awayTeam": {
+        "abbrev": "NYR",
+        "commonName": { "default": "Rangers" },
+        "score": 0
+      }
+    }
+  ]
+}

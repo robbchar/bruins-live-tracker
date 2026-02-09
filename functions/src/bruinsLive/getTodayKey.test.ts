@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getTodayKey } from './getTodayKey'
+import { getTodayKey } from './getTodayKey.js'
 
 describe('getTodayKey', () => {
   it('returns the Eastern date key for a UTC timestamp', () => {

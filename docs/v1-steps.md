@@ -148,25 +148,25 @@ ios/
 - Scheduled backend function maintains accurate game state
 
 **To do**
-- [ ] Implement `SportsDataProvider` interface
-- [ ] Implement `NhlApiProvider` (Cloud Functions only)
-- [ ] Parse gameId, startTime, status, opponent, home/away
-- [ ] Compute Eastern `dateKey`
-- [ ] Write `/bruinsLive/app/games/{gameId}`
-- [ ] Write `/bruinsLive/app/today/{dateKey}`
-- [ ] Compute `effectiveChannel = override ?? default ("91")`
-- [ ] Detect meaningful diffs for push triggers
+- [x] Implement `SportsDataProvider` interface
+- [x] Implement `NhlApiProvider` (Cloud Functions only)
+- [x] Parse gameId, startTime, status, opponent, home/away
+- [x] Compute Eastern `dateKey`
+- [x] Write `/bruinsLive/app/games/{gameId}`
+- [x] Write `/bruinsLive/app/today/{dateKey}`
+- [x] Compute `effectiveChannel = override ?? default ("91")`
+- [x] Detect meaningful diffs for push triggers
 
 **Tests (functions / Vitest)**
-- [ ] Adapter parsing tests (scheduled/live/final)
-- [ ] Poller logic tests with fixtures only
-- [ ] No network calls in tests
+- [x] Adapter parsing tests (scheduled/live/final)
+- [x] Poller logic tests with fixtures only
+- [x] No network calls in tests
 
 **Acceptance**
 - [ ] Poller deployed
 - [ ] Firestore updates correctly from real NHL data
-- [ ] All tests pass
-- [ ] All items checked off the list of TODOs
+- [x] All tests pass
+- [x] All items checked off the list of TODOs
 
 ---
 
