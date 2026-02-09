@@ -1,15 +1,15 @@
 # Step 1 Design: Firestore Schema + Helpers
 
 ## Problem statement
-Establish the initial Bruins Live Firestore schema and rules, and add tested
-backend helpers for computing the Eastern `dateKey` and the effective SiriusXM
-channel. This prepares the backend for later polling and admin overrides while
-keeping Firebase integration minimal.
+Establish the initial Bruins Live Firestore schema and rules (under
+`/bruinsLive/app/**`), and add tested backend helpers for computing the Eastern
+`dateKey` and the effective SiriusXM channel. This prepares the backend for
+later polling and admin overrides while keeping Firebase integration minimal.
 
 ## Requirements
-- Draft additive Firestore rules scoped only to `/bruinsLive/**`.
-- Define the initial Firestore documents for `/bruinsLive/config/public` and
-  `/bruinsLive/today/{dateKey}` in a clear, reproducible way.
+- Draft additive Firestore rules scoped only to `/bruinsLive/app/**`.
+- Define the initial Firestore documents for `/bruinsLive/app/config/public` and
+  `/bruinsLive/app/today/{dateKey}` in a clear, reproducible way.
 - Implement and test `getTodayKey(timezone)` and
   `computeEffectiveChannel(default, override)` in `functions`.
 

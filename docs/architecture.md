@@ -42,15 +42,17 @@ This Firebase project hosts multiple apps.
 **All Bruins Live data MUST be namespaced under a single root.**
 
 ### Namespace
-**Root prefix:** `/bruinsLive/**`
+**Root prefix:** `/bruinsLive/app/**`
 
-All collections and documents for this app live under that prefix.
+All collections and documents for this app live under that prefix. The
+additional `app` document is required to keep Firestore paths valid
+(collection/document alternation).
 
 Examples:
-- `/bruinsLive/config/public`
-- `/bruinsLive/games/{gameId}`
-- `/bruinsLive/today/{dateKey}`
-- `/bruinsLive/devices/{deviceId}`
+- `/bruinsLive/app/config/public`
+- `/bruinsLive/app/games/{gameId}`
+- `/bruinsLive/app/today/{dateKey}`
+- `/bruinsLive/app/devices/{deviceId}`
 
 This ensures:
 - no collisions with other apps
@@ -75,7 +77,7 @@ Bruins Live rules must live in a clearly commented section so future edits canno
 
 ## Data model (Firestore)
 
-All paths below are relative to `/bruinsLive`.
+All paths below are relative to `/bruinsLive/app`.
 
 ### `config/public`
 Public configuration.

@@ -64,11 +64,11 @@ ios/
 **To do**
 - [ ] Create Firebase project
 - [ ] Initialize Firestore
-- [ ] Create `/bruinsLive/config/public`
-- [ ] Create `/bruinsLive/today/{dateKey}`
+- [ ] Create `/bruinsLive/app/config/public`
+- [ ] Create `/bruinsLive/app/today/{dateKey}`
 - [ ] Add Firestore rules:
   - [ ] Rules are **additive**
-  - [ ] Rules are scoped to `/bruinsLive/**`
+  - [ ] Rules are scoped to `/bruinsLive/app/**`
   - [ ] Existing apps remain unaffected
 
 **Tests (functions / Vitest)**
@@ -82,7 +82,7 @@ ios/
 - [ ] All items checked off the list of TODOs
 
 **Prompt**
-> Use `docs/architecture.md`. Implement Firestore helpers for dateKey and effectiveChannel in `functions`, with Vitest tests. Draft additive Firestore rules scoped only to `/bruinsLive/**`.
+> Use `docs/architecture.md`. Implement Firestore helpers for dateKey and effectiveChannel in `functions`, with Vitest tests. Draft additive Firestore rules scoped only to `/bruinsLive/app/**`.
 
 ---
 
@@ -119,8 +119,8 @@ ios/
 
 **To do**
 - [ ] Create admin UI using React + Vite
-- [ ] Display default channel from `/bruinsLive/config/public`
-- [ ] Display effective channel from `/bruinsLive/today/{dateKey}`
+- [ ] Display default channel from `/bruinsLive/app/config/public`
+- [ ] Display effective channel from `/bruinsLive/app/today/{dateKey}`
 - [ ] Allow setting `channelOverride` and note
 - [ ] Allow clearing override
 - [ ] Wrap Firebase access behind `dataClient`
@@ -138,7 +138,7 @@ ios/
 - [ ] All items checked off the list of TODOs
 
 **Prompt**
-> Use `docs/architecture.md`. Build the admin UI for viewing and setting `/bruinsLive/today/{dateKey}.channelOverride`. Use React + Vite + Vitest. Mock Firebase via a dataClient abstraction.
+> Use `docs/architecture.md`. Build the admin UI for viewing and setting `/bruinsLive/app/today/{dateKey}.channelOverride`. Use React + Vite + Vitest. Mock Firebase via a dataClient abstraction.
 
 ---
 
@@ -152,8 +152,8 @@ ios/
 - [ ] Implement `NhlApiProvider` (Cloud Functions only)
 - [ ] Parse gameId, startTime, status, opponent, home/away
 - [ ] Compute Eastern `dateKey`
-- [ ] Write `/bruinsLive/games/{gameId}`
-- [ ] Write `/bruinsLive/today/{dateKey}`
+- [ ] Write `/bruinsLive/app/games/{gameId}`
+- [ ] Write `/bruinsLive/app/today/{dateKey}`
 - [ ] Compute `effectiveChannel = override ?? default ("91")`
 - [ ] Detect meaningful diffs for push triggers
 
@@ -177,7 +177,7 @@ ios/
 
 **To do**
 - [ ] Create SwiftUI app shell
-- [ ] Read Firestore `/bruinsLive/today/{dateKey}`
+- [ ] Read Firestore `/bruinsLive/app/today/{dateKey}`
 - [ ] Resolve linked game doc
 - [ ] Implement Live Activity UI
 - [ ] Start/Stop Live Activity controls
@@ -203,7 +203,7 @@ ios/
 - [ ] Generate and persist `deviceId`
 - [ ] Capture Live Activity push token
 - [ ] POST token to backend
-- [ ] Store token in `/bruinsLive/devices/{deviceId}`
+- [ ] Store token in `/bruinsLive/app/devices/{deviceId}`
 
 **Tests**
 - [ ] Request builder unit test (XCTest or functions Vitest)
@@ -247,7 +247,7 @@ ios/
 - System is safe, observable, and resilient
 
 **To do**
-- [ ] Add push kill switch in `/bruinsLive/config/public`
+- [ ] Add push kill switch in `/bruinsLive/app/config/public`
 - [ ] Rate-limit admin writes
 - [ ] Gracefully handle missing game data
 - [ ] Add structured logging in functions
@@ -263,7 +263,7 @@ ios/
 
 > I’m implementing Bruins Live V1.  
 > Use `docs/architecture.md` and `docs/v1-steps.md` as the source of truth.  
-> All Firebase data must be namespaced under `/bruinsLive/**`.  
+> All Firebase data must be namespaced under `/bruinsLive/app/**`.
 > Firestore rules changes must be additive and must not break other apps.  
 > Prefer backend/web-first work; keep iOS native and minimal.  
 > Use straight React + Vite + Vitest for web and backend.  

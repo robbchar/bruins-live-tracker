@@ -65,7 +65,8 @@ service cloud.firestore {
     }
 
     // bruinsLive namespace
-    match /bruinsLive {
+    // NOTE: "app" is a fixed root document to keep collection paths valid.
+    match /bruinsLive/app {
       // Public config and today pointer can be read by clients.
       match /config/public {
         allow read: if true;
