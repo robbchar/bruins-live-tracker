@@ -134,7 +134,7 @@ ios/
 **Acceptance**
 - [x] Admin UI tests pass
 - [x] Admin UI deploys to Firebase Hosting
-- [ ] Override updates Firestore correctly
+- [x] Override updates Firestore correctly
 - [x] All items checked off the list of TODOs
 
 **Prompt**
