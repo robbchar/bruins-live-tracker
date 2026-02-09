@@ -3,3 +3,5 @@ This is a project that creates a live activity on the lockscreen of an iphone wh
 The @docs/architecture.md and @docs/v1-steps.md are probably particularly interesting.
 
 Use the ../.cursor/rules files for any specific guidance and the MCP tools for context7 and the browser dev tools when you need them
+
+The firebase account holds applications other than this one so be as specific as possible when deploying to firebase
