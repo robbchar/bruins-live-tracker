@@ -1,0 +1,24 @@
+{
+  "id": 2026020801,
+  "gameState": "FINAL",
+  "startTimeUTC": "2026-02-08T00:30:00Z",
+  "periodDescriptor": {
+    "number": 3,
+    "periodType": "REG"
+  },
+  "clock": {
+    "timeRemaining": "00:00",
+    "running": false,
+    "inIntermission": false
+  },
+  "homeTeam": {
+    "abbrev": "BOS",
+    "commonName": { "default": "Bruins" },
+    "score": 3
+  },
+  "awayTeam": {
+    "abbrev": "NYR",
+    "commonName": { "default": "Rangers" },
+    "score": 2
+  }
+}
