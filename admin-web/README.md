@@ -71,9 +71,12 @@ export default defineConfig([
   },
 ])
 ```
+
 ## Firebase config (local only)
+
 Copy `admin-web/.env.local.example` to `admin-web/.env.local`
 and set:
+
 ```
 VITE_FIREBASE_API_KEY=your_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
@@ -85,6 +88,7 @@ VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
 ```
 
 Example initialization:
+
 ```typescript
 import { initializeApp } from 'firebase/app'
 

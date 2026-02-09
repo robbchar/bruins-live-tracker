@@ -1,10 +1,127 @@
+import { useEffect, useState } from 'react'
 import './App.css'
+import { dataClient as defaultClient } from './dataClient'
+import type { PublicConfig, TodayState } from './types'
+import type { DataClient } from './dataClient'
 
-function App() {
+type LoadState = {
+  config: PublicConfig | null
+  today: TodayState | null
+}
+
+type AppProps = {
+  client?: DataClient
+}
+
+function App({ client = defaultClient }: AppProps) {
+  const [loadState, setLoadState] = useState<LoadState>({
+    config: null,
+    today: null,
+  })
+  const [channelOverride, setChannelOverride] = useState('')
+  const [channelOverrideNote, setChannelOverrideNote] = useState('')
+  const [isSaving, setIsSaving] = useState(false)
+  const [isClearing, setIsClearing] = useState(false)
+
+  useEffect(() => {
+    let isMounted = true
+    const load = async () => {
+      const [config, today] = await Promise.all([
+        client.getPublicConfig(),
+        client.getTodayState(),
+      ])
+      if (!isMounted) return
+      setLoadState({ config, today })
+      setChannelOverride(today.channelOverride ?? '')
+      setChannelOverrideNote(today.channelOverrideNote ?? '')
+    }
+    void load()
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  const handleSave = async () => {
+    if (!loadState.today) return
+    const trimmedOverride = channelOverride.trim()
+    if (!trimmedOverride) return
+
+    setIsSaving(true)
+    await client.setChannelOverride({
+      dateKey: loadState.today.dateKey,
+      channelOverride: trimmedOverride,
+      channelOverrideNote: channelOverrideNote.trim() || null,
+    })
+    setIsSaving(false)
+  }
+
+  const handleClear = async () => {
+    if (!loadState.today) return
+    setIsClearing(true)
+    await client.clearChannelOverride(loadState.today.dateKey)
+    setChannelOverride('')
+    setChannelOverrideNote('')
+    setIsClearing(false)
+  }
+
+  if (!loadState.config || !loadState.today) {
+    return (
+      <main className="app">
+        <h1>Bruins Live Admin</h1>
+        <p>Loading…</p>
+      </main>
+    )
+  }
+
   return (
     <main className="app">
       <h1>Bruins Live Admin</h1>
-      <p>Channel override coming soon.</p>
+      <section className="card">
+        <h2>Channels</h2>
+        <p>
+          Default channel:{' '}
+          <strong>
+            {loadState.config.channelLabel} {loadState.config.defaultChannel}
+          </strong>
+        </p>
+        <p>
+          Effective channel:{' '}
+          <strong>
+            {loadState.config.channelLabel} {loadState.today.effectiveChannel}
+          </strong>
+        </p>
+      </section>
+
+      <section className="card">
+        <h2>Override</h2>
+        <label className="field">
+          <span>Channel override</span>
+          <input
+            type="text"
+            inputMode="numeric"
+            placeholder="91"
+            value={channelOverride}
+            onChange={(event) => setChannelOverride(event.target.value)}
+          />
+        </label>
+        <label className="field">
+          <span>Override note</span>
+          <input
+            type="text"
+            placeholder="Optional note"
+            value={channelOverrideNote}
+            onChange={(event) => setChannelOverrideNote(event.target.value)}
+          />
+        </label>
+        <div className="actions">
+          <button type="button" onClick={handleSave} disabled={isSaving}>
+            {isSaving ? 'Saving…' : 'Save override'}
+          </button>
+          <button type="button" onClick={handleClear} disabled={isClearing}>
+            {isClearing ? 'Clearing…' : 'Clear override'}
+          </button>
+        </div>
+      </section>
     </main>
   )
 }
